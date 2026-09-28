@@ -1,6 +1,8 @@
 package mx.edu.utez.proyecto1D.Controller;
 
+import jakarta.validation.Valid;
 import mx.edu.utez.proyecto1D.Controller.dto.RequestBodyDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,10 +39,14 @@ public class MyController {
     }
 
     @PostMapping("/request-body")
-    public String requetsbody(@RequestBody RequestBodyDTO payload) {
+    // response entity es una clase q me permite personalizar la respuesta que se manda al cliente
+    public ResponseEntity<RequestBodyDTO> requetsbody(@RequestBody @Valid RequestBodyDTO payload) {
         System.out.println(payload.getNombre());
         System.out.println(payload.getEdad());
         System.out.println(payload.getCorreo());
-        return "HOLA RAMONA sin cuerpo";
+
+        return ResponseEntity
+                .status(201)
+                .body(payload);
     }
 }
